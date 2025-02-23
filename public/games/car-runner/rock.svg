@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Rock shape -->
+  <path d="
+    M30 5
+    L45 15
+    L55 35
+    L45 50
+    L25 55
+    L10 45
+    L5 25
+    L15 10
+    Z
+  " fill="#4b5563"/>
+  
+  <!-- Highlights -->
+  <path d="
+    M30 5
+    L45 15
+    L40 12
+    L30 8
+    Z
+  " fill="#6b7280"/>
+  
+  <!-- Shadows -->
+  <path d="
+    M10 45
+    L25 55
+    L20 50
+    L8 40
+    Z
+  " fill="#374151"/>
+</svg> 

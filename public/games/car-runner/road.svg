@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="360" height="600" viewBox="0 0 360 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Dark asphalt background -->
+  <rect width="360" height="600" fill="#1a1a1a"/>
+  
+  <!-- Lane markings -->
+  <rect x="118" y="0" width="4" height="600" fill="#ffffff" opacity="0.5"/>
+  <rect x="238" y="0" width="4" height="600" fill="#ffffff" opacity="0.5"/>
+  
+  <!-- Center dashed lines -->
+  <g opacity="0.8">
+    <rect x="178" y="0" width="4" height="40" fill="#ffffff"/>
+    <rect x="178" y="60" width="4" height="40" fill="#ffffff"/>
+    <rect x="178" y="120" width="4" height="40" fill="#ffffff"/>
+    <rect x="178" y="180" width="4" height="40" fill="#ffffff"/>
+    <rect x="178" y="240" width="4" height="40" fill="#ffffff"/>
+    <rect x="178" y="300" width="4" height="40" fill="#ffffff"/>
+    <rect x="178" y="360" width="4" height="40" fill="#ffffff"/>
+    <rect x="178" y="420" width="4" height="40" fill="#ffffff"/>
+    <rect x="178" y="480" width="4" height="40" fill="#ffffff"/>
+    <rect x="178" y="540" width="4" height="40" fill="#ffffff"/>
+  </g>
+</svg> 
