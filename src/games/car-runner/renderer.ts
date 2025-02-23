@@ -18,27 +18,29 @@ export class CanvasRenderer implements GameRenderer {
     this.canvas.width = 360;  // 3 lanes * 120 width
     this.canvas.height = 600;
 
-    // Load images
+    // Load images with basePath
+    const basePath = '/mGames';
+    
     this.roadImage = new Image();
-    this.roadImage.src = '/games/car-runner/road.png';
+    this.roadImage.src = `${basePath}/games/car-runner/road.png`;
 
     this.carImage = new Image();
-    this.carImage.src = '/games/car-runner/car.png';
+    this.carImage.src = `${basePath}/games/car-runner/car.png`;
 
     this.obstacleImages = {
       car: (() => {
         const img = new Image();
-        img.src = '/games/car-runner/obstacle-car.png';
+        img.src = `${basePath}/games/car-runner/obstacle-car.png`;
         return img;
       })(),
       rock: (() => {
         const img = new Image();
-        img.src = '/games/car-runner/rock.png';
+        img.src = `${basePath}/games/car-runner/rock.png`;
         return img;
       })(),
       tree: (() => {
         const img = new Image();
-        img.src = '/games/car-runner/tree.png';
+        img.src = `${basePath}/games/car-runner/tree.png`;
         return img;
       })(),
     };

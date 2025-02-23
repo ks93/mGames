@@ -13,7 +13,7 @@ const games: GameCard[] = [
     id: 'car-runner',
     title: 'Car Runner',
     description: 'Drive as far as you can while avoiding obstacles. Use arrow keys or touch controls to move left and right.',
-    imageUrl: '/games/car-runner/preview.png',
+    imageUrl: '/mGames/games/car-runner/preview.png',
   },
 ];
 
