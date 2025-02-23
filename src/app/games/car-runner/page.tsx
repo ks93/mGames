@@ -5,13 +5,23 @@ import { useRecentActivity } from '@/hooks/useRecentActivity';
 import { CarRunnerEngine } from '@/games/car-runner/engine';
 import { CanvasRenderer } from '@/games/car-runner/renderer';
 import { AABBCollisionDetector } from '@/games/car-runner/collision';
+import { getHighScores, updateHighScores } from '@/utils/highScores';
 
 export default function CarRunnerPage() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const engineRef = useRef<CarRunnerEngine | null>(null);
   const [isGameOver, setIsGameOver] = useState(false);
   const [finalScore, setFinalScore] = useState(0);
+  const [highScore, setHighScore] = useState<number | null>(null);
   const { addActivity } = useRecentActivity();
+
+  // Load high score on mount
+  useEffect(() => {
+    const scores = getHighScores('car-runner');
+    if (scores.length > 0) {
+      setHighScore(scores[0].score);
+    }
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -29,6 +39,10 @@ export default function CarRunnerPage() {
         onGameOver: (distance) => {
           setIsGameOver(true);
           setFinalScore(distance);
+          const isNewHighScore = updateHighScores('car-runner', Math.floor(distance));
+          if (isNewHighScore) {
+            setHighScore(Math.floor(distance));
+          }
           addActivity({
             gameId: 'car-runner',
             gameName: 'Car runner',
@@ -162,12 +176,22 @@ export default function CarRunnerPage() {
           tabIndex={0}
         />
         
+        {/* High Score Display */}
+        {highScore !== null && (
+          <div className="absolute top-2 right-2 bg-black/50 rounded px-2 py-1">
+            <span className="text-sm text-gray-300">Best: {formatDistance(highScore)}</span>
+          </div>
+        )}
+        
         {isGameOver && (
           <div className="absolute inset-0 bg-black/70 rounded-lg flex flex-col items-center justify-center">
             <h2 className="text-2xl font-bold text-white mb-4">Game over</h2>
-            <p className="text-xl text-gray-300 mb-6">
+            <p className="text-xl text-gray-300 mb-2">
               Distance: {formatDistance(finalScore)}
             </p>
+            {finalScore === highScore && (
+              <p className="text-lg text-yellow-400 mb-4">New High Score!</p>
+            )}
             <button
               onClick={handleRestart}
               className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg transition-colors"
