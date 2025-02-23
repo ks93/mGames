@@ -11,7 +11,7 @@ interface GameCard {
 const games: GameCard[] = [
   {
     id: 'car-runner',
-    title: 'Car Runner',
+    title: 'Car runner',
     description: 'Drive as far as you can while avoiding obstacles. Use arrow keys or touch controls to move left and right.',
     imageUrl: '/mGames/games/car-runner/preview.png',
   },
@@ -41,7 +41,7 @@ export default function GamesPage() {
                 />
               ) : (
                 <div className="flex items-center justify-center h-full">
-                  <span className="text-gray-400">Game Preview</span>
+                  <span className="text-gray-400">Game preview</span>
                 </div>
               )}
             </div>

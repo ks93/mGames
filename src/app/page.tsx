@@ -31,7 +31,11 @@ export default function Home() {
         {recentActivity.activities.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {recentActivity.activities.map((activity) => (
-              <div key={activity.gameId} className="bg-gray-800 rounded-lg p-6 transform hover:scale-105 transition-transform duration-200">
+              <Link
+                key={activity.gameId}
+                href={`/games/${activity.gameId}`}
+                className="block bg-gray-800 rounded-lg p-6 transform hover:scale-105 transition-transform duration-200 hover:bg-gray-700"
+              >
                 <h3 className="text-xl font-semibold text-white mb-3">{activity.gameName}</h3>
                 <div className="space-y-2 text-gray-400">
                   <p>Last played: {formatLastPlayed(activity.lastPlayed)}</p>
@@ -42,7 +46,7 @@ export default function Home() {
                     <p>Time spent: {formatTimeSpent(activity.timeSpent)}</p>
                   )}
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         ) : (

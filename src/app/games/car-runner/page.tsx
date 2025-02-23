@@ -31,7 +31,7 @@ export default function CarRunnerPage() {
           setFinalScore(distance);
           addActivity({
             gameId: 'car-runner',
-            gameName: 'Car Runner',
+            gameName: 'Car runner',
             lastPlayed: new Date().toISOString(),
             score: Math.floor(distance),
           });
@@ -72,27 +72,38 @@ export default function CarRunnerPage() {
     };
 
     // Touch controls
-    let touchStartX = 0;
     const handleTouchStart = (e: TouchEvent) => {
       if (!engine.getState().isRunning) return;
       e.preventDefault();
-      touchStartX = e.touches[0].clientX;
     };
 
     const handleTouchMove = (e: TouchEvent) => {
       if (!engine.getState().isRunning) return;
       e.preventDefault();
       
-      const touchX = e.touches[0].clientX;
-      const diff = touchX - touchStartX;
+      const touch = e.touches[0];
+      const canvas = canvasRef.current;
+      if (!canvas) return;
       
-      if (Math.abs(diff) > 30) {
-        if (diff > 0) {
-          controls.moveRight();
-        } else {
-          controls.moveLeft();
-        }
-        touchStartX = touchX;
+      // Get touch position relative to canvas
+      const rect = canvas.getBoundingClientRect();
+      const touchX = touch.clientX - rect.left;
+      
+      // Scale touch position to match canvas coordinates
+      const scaleX = canvas.width / rect.width;
+      const canvasX = touchX * scaleX;
+      
+      // Get current car position
+      const car = engine.getState().car;
+      const targetX = Math.max(30, Math.min(canvas.width - 30, canvasX));
+      
+      // Determine direction based on target position
+      if (targetX < car.position.x - 5) {
+        controls.moveLeft();
+      } else if (targetX > car.position.x + 5) {
+        controls.moveRight();
+      } else {
+        controls.stopMoving();
       }
     };
 
@@ -141,12 +152,9 @@ export default function CarRunnerPage() {
   };
 
   return (
-    <div className="h-[calc(100vh-8rem)] flex items-center justify-center gap-8 overflow-hidden" style={{ touchAction: 'none' }}>
+    <div className="flex items-center justify-center" style={{ minHeight: 'calc(100vh - 12rem)' }}>
       {/* Game Section */}
       <div className="relative">
-        <h1 className="absolute -top-12 left-0 right-0 text-3xl font-bold text-white text-center">
-          Car Runner
-        </h1>
         <canvas
           ref={canvasRef}
           className="bg-gray-900 rounded-lg shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50"
@@ -156,7 +164,7 @@ export default function CarRunnerPage() {
         
         {isGameOver && (
           <div className="absolute inset-0 bg-black/70 rounded-lg flex flex-col items-center justify-center">
-            <h2 className="text-2xl font-bold text-white mb-4">Game Over!</h2>
+            <h2 className="text-2xl font-bold text-white mb-4">Game over</h2>
             <p className="text-xl text-gray-300 mb-6">
               Distance: {formatDistance(finalScore)}
             </p>
@@ -164,30 +172,10 @@ export default function CarRunnerPage() {
               onClick={handleRestart}
               className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg transition-colors"
             >
-              Play Again
+              Play again
             </button>
           </div>
         )}
-      </div>
-
-      {/* Instructions Panel */}
-      <div className="bg-gray-800/50 rounded-lg p-6 max-w-xs">
-        <h2 className="text-xl font-semibold text-white mb-4">How to Play</h2>
-        <div className="space-y-4 text-gray-300">
-          <p>
-            <span className="font-semibold">Controls:</span><br />
-            • Left Arrow: Move left<br />
-            • Right Arrow: Move right
-          </p>
-          <p>
-            <span className="font-semibold">Mobile:</span><br />
-            Swipe left or right to move
-          </p>
-          <p>
-            <span className="font-semibold">Goal:</span><br />
-            Drive as far as you can while avoiding obstacles. Your score is based on the distance traveled.
-          </p>
-        </div>
       </div>
     </div>
   );
